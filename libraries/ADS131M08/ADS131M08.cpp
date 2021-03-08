@@ -2,15 +2,15 @@
 
 ADS131M08::ADS131M08(int cs, int xtal, int drdy, int clk) {
 
-    CS = cs; XTAL = xtal; DRDY = drdy;
-
-    pinMode(CS, OUTPUT); digitalWrite(CS, HIGH);
-    pinMode(DRDY, INPUT_PULLUP);
-
+    CS = cs; XTAL = xtal; DRDY = drdy; //You don't have to use DRDY, can also read off the ADS131_STATUS register.
     SpiClk = SpiClk;
 }
 
 void ADS131M08::init(int clkin) {
+        
+    pinMode(CS, OUTPUT); digitalWrite(CS, HIGH);
+    pinMode(DRDY, INPUT_PULLUP);
+    
     spi->begin();
 
     ledcSetup(1, clkin, 8);
