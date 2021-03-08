@@ -1,6 +1,6 @@
 #include "ADS131M08.h"
 
-ADS131M08 adc(5,22,21);
+ADS131M08 adc(5,22,21,1000000);
 
 void setup() {
   // put your setup code here, to run once:
