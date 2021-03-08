@@ -82,8 +82,8 @@ class ADS131M08 {
     bool firstRead = true;
     int nFrameWords = 10;
     // Dummy word frame to write ADC during ADC data reads
-    ADS131M08(int cs=5, int xtal=22, int drdy=21, int clk = 1000000, int clkin = 8192000);
-    void init();
+    ADS131M08(int cs=5, int xtal=22, int drdy=21, int clk = 1000000);
+    void init(int clkin = 8192000);
     void readChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_t * outputArrPtr);
     int32_t readChannelSingle(int8_t channel);
     bool globalChop(bool enabled, uint8_t log2delay);
