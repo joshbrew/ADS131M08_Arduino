@@ -1,7 +1,7 @@
 #ifndef ADS131M08_H
 #define ADS131M08_H
 //ADS131M08.cpp LGPL 
-//Adapted for the 8 channel device from https://github.com/icl-rocketry/ADS131M04-Lib
+//Adapted for the 8 channel device from https://github.com/icl-rocketry/ADS131M04-Lib (LGPL)
 
 
 /* Definitions of all the addresses of the registers of the ADS131M04
