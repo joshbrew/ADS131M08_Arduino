@@ -1,6 +1,6 @@
 #include "ADS131M08.h"
 
-ADS131M08::ADS131M08(int cs, int xtal, int drdy, int clk, int clkin) {
+ADS131M08::ADS131M08(int cs, int xtal, int drdy, int clk) {
 
     CS = cs; XTAL = xtal; DRDY = drdy;
 
@@ -10,10 +10,10 @@ ADS131M08::ADS131M08(int cs, int xtal, int drdy, int clk, int clkin) {
     SpiClk = SpiClk;
 }
 
-void ADS131M08::init() {
+void ADS131M08::init(int clkin) {
     spi->begin();
 
-    ledcSetup(1, 8192000, 8);
+    ledcSetup(1, clkin, 8);
     ledcAttachPin(XTAL,1); //Simulate 8.192Mhz crystal with PWM. This needs to be started as soon as possible after powering on
     ledcWrite(1,127);
 
