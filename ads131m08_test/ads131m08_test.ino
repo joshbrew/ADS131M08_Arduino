@@ -1,6 +1,19 @@
 #include "ADS131M08.h"
 
-ADS131M08 adc(5,22,21,1000000);
+#define MISO_PIN              19
+#define MOSI_PIN              23
+#define SCK_PIN               18
+#define CS_PIN                5
+
+#define VSPI_MISO             MISO
+#define VSPI_MOSI             MOSI
+#define VSPI_SCLK             SCK
+#define VSPI_SS               SS_PIN
+
+#define DRDY_PIN              21
+#define XTAL_PIN              22
+
+ADS131M08 adc(CS_PIN,XTAL_PIN,DRDY_PIN,1000000);
 
 void setup() {
   // put your setup code here, to run once:
