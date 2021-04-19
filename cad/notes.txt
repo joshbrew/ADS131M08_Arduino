@@ -1,0 +1,3 @@
+This doesn't have differential caps on it, which are recommended for differential inputs (see datasheet example configs).
+
+This is a raw breakout board just to get the software working and test different configurations, not much else.
