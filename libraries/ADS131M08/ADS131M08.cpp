@@ -7,11 +7,15 @@ ADS131M08::ADS131M08(int cs, int xtal, int drdy, int clk) {
 }
 
 void ADS131M08::init(int clkin) {
+
+    Serial.println("Setting pin configuration");
         
     pinMode(CS, OUTPUT); digitalWrite(CS, HIGH);
     pinMode(DRDY, INPUT_PULLUP);
     
     spi->begin();
+
+    Serial.println("Setting oscillator");
 
     ledcSetup(1, clkin, 8);
     ledcAttachPin(XTAL,1); //Simulate 8.192Mhz crystal with PWM. This needs to be started as soon as possible after powering on
@@ -208,4 +212,6 @@ bool ADS131M08::setGain(int gain) { // apply gain to all channels (1 to 128, bas
     }
     writeReg(ADS131_GAIN1, writegain);
     writeReg(ADS131_GAIN2, writegain);
+
+    return true;
 }
