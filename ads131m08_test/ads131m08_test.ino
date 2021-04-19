@@ -26,15 +26,22 @@ void setup() {
   adc.init(CLKOUT);
 
   delay(100);
+  uint16_t id = adc.readReg(ADS131_ID);
+  Serial.print("ID: ");
+  Serial.println(id, BIN);
+  
   uint16_t stat = adc.readReg(ADS131_STATUS);
   Serial.print("Status: ");
-  Serial.println(stat);
+  Serial.println(stat, BIN);
+
+  uint16_t Mode = adc.readReg(ADS131_MODE);
+  Serial.print("Mode: ");
+  Serial.println(Mode, BIN);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   uint16_t stat = adc.readReg(ADS131_STATUS);
-
   uint8_t drdy = stat >> 8;
   if(drdy == 255) { //All channels ready to sample
     Serial.print("Channel 0 Reading: ");
