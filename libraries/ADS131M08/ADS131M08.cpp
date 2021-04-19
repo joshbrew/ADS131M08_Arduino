@@ -31,7 +31,7 @@ void ADS131M08::readChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32
     spiCommFrame(&rawDataArr[0]);
     
     // Save the decoded data for each of the channels
-    for (int8_t i = 0; i<nFrameWords; i++) {
+    for (int8_t i = 0; i<channelArrLen; i++) {
         *outputArrPtr = twoCompDeco(rawDataArr[*channelArrPtr+1]);
         outputArrPtr++;
         channelArrPtr++;
