@@ -157,8 +157,8 @@ void ADS131M08::spiCommFrame(uint32_t * outPtr, uint16_t command) {
     // Send the command in the first word
     *outPtr = spiTransferWord(command);
 
-    // For the next 4 words, just read the data
-    for (uint8_t i=1; i < 5; i++) {
+    // For the next 8 words, just read the data
+    for (uint8_t i=1; i < 9; i++) {
         outPtr++;
         *outPtr = spiTransferWord() >> 8;
     }
