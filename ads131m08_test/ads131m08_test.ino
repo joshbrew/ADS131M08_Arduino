@@ -15,7 +15,7 @@
 
 int CLKOUT  =                 8192000; //XTAL speed (50% duty cycle PWM)
 
-//ADS131M08 adc(CS_PIN,XTAL_PIN,DRDY_PIN,2000000);
+ADS131M08 adc(CS_PIN,XTAL_PIN,DRDY_PIN,2000000);
 
 void setup() {
   // put your setup code here, to run once:
@@ -37,6 +37,7 @@ void loop() {
 
   uint8_t drdy = stat >> 8;
   if(drdy == 255) { //All channels ready to sample
+    Serial.print("Channel 0 Reading: ");
     Serial.println(adc.readChannelSingle(0)); //Just read the first one
   }
   else {
