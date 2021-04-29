@@ -3,7 +3,7 @@
 ADS131M08::ADS131M08(int cs, int xtal, int drdy, int clk) {
 
     CS = cs; XTAL = xtal; DRDY = drdy; //You don't have to use DRDY, can also read off the ADS131_STATUS register.
-    SpiClk = SpiClk;
+    SpiClk = clk;
 }
 
 void ADS131M08::init(int clkin) {
@@ -17,9 +17,11 @@ void ADS131M08::init(int clkin) {
 
     Serial.println("Setting oscillator");
 
-    ledcSetup(1, clkin, 8);
-    ledcAttachPin(XTAL,1); //Simulate 8.192Mhz crystal with PWM. This needs to be started as soon as possible after powering on
-    ledcWrite(1,127);
+    ledcSetup(2, clkin, 8);
+    ledcAttachPin(XTAL, 2); //Simulate 8.192Mhz crystal with PWM. This needs to be started as soon as possible after powering on
+    ledcWrite(2,127);
+
+    Serial.println("SPI Ready...");
 
 }
 
