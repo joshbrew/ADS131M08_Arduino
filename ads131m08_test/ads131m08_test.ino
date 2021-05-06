@@ -1,7 +1,7 @@
 #include "ADS131M08.h"
 
-#define MISO_PIN              23
-#define MOSI_PIN              19
+#define MISO_PIN              19
+#define MOSI_PIN              23
 #define SCK_PIN               18
 #define CS_PIN                5
 
@@ -15,12 +15,12 @@
 
 int CLKOUT  =                 8192000; //XTAL speed (50% duty cycle PWM)
 
-ADS131M08 adc(CS_PIN,XTAL_PIN,DRDY_PIN,2000000);
+ADS131M08 adc(CS_PIN,XTAL_PIN,DRDY_PIN,8192000);
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  Serial.println("Setting SPI");
+  Serial.println("Setting up SPI");
   adc.spi = new SPIClass(VSPI);
   Serial.println("Booting SPI");
   adc.init(CLKOUT);
