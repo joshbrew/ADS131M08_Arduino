@@ -17,9 +17,9 @@ void ADS131M08::init(int clkin) {
 
     Serial.println("Setting oscillator");
 
-    ledcSetup(2, clkin, 8);
+    ledcSetup(2, clkin, 2);
     ledcAttachPin(XTAL, 2); //Simulate 8.192Mhz crystal with PWM. This needs to be started as soon as possible after powering on
-    ledcWrite(2,127);
+    ledcWrite(2,2);
 
     Serial.println("SPI Ready...");
 
@@ -125,7 +125,6 @@ uint16_t ADS131M08::readReg(uint8_t reg) {
     uint16_t commandWord = (commandPref << 12) + (reg << 7);
 
     uint32_t responseArr[10];
-
     // Use first frame to send command
     spiCommFrame(&responseArr[0], commandWord);
 
