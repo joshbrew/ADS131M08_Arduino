@@ -29,6 +29,19 @@ void setup() {
   adc.init(CLKOUT);
 
   delay(100);
+
+  adc.writeReg(ADS131_CLOCK,0b1111111100011010); //
+  uint16_t clkreg = adc.readReg(ADS131_CLOCK);
+  Serial.print("CLOCK: ");
+  Serial.println(clkreg,BIN);
+  
+  adc.setGain(64);
+  uint16_t gainreg = adc.readReg(ADS131_GAIN1);
+  Serial.print("GAIN1: ");
+  Serial.println(gainreg, BIN);
+  
+  //adc.globalChop(true,2);
+  
   uint16_t id = adc.readReg(ADS131_ID);
   Serial.print("ID: ");
   Serial.println(id, HEX);
@@ -41,6 +54,13 @@ void setup() {
   Serial.print("Mode: ");
   Serial.println(Mode, HEX);
 
+  Serial.println("Starting in 3...");
+  delay(1000);
+  Serial.println("2...");
+  delay(1000);
+  Serial.println("1...");
+  delay(1000);
+  
   pinMode(RESET, OUTPUT);
   digitalWrite(RESET, LOW);
   delay(1);
