@@ -30,7 +30,13 @@ void setup() {
 
   delay(100);
 
-  adc.writeReg(ADS131_CLOCK,0b1111111100011111); //Clock register (page)
+
+  pinMode(RESET, OUTPUT);
+  digitalWrite(RESET, LOW);
+  delay(1);
+  digitalWrite(RESET, HIGH);
+
+  adc.writeReg(ADS131_CLOCK,0b1111111100011110); //Clock register (page 55 in datasheet)
   /*CLOCK REG SETTINGS
    * Bytes 15-8: ADC Channel enable/disable
    * Byte 7: Crystal disable 
@@ -83,10 +89,6 @@ void setup() {
   Serial.println("1...");
   delay(1000);
   
-  pinMode(RESET, OUTPUT);
-  digitalWrite(RESET, LOW);
-  delay(1);
-    digitalWrite(RESET, HIGH);
 
 }
 
@@ -98,17 +100,18 @@ void loop() {
     //Serial.println(adc.readChannelSingle(0)); //Just read the first one
     int32_t channelArr[8];
     adc.readAllChannels(channelArr);
-    sprintf(outputarr, "%d|%d|%d|%d|%d|%d|%d|%d\r\n",
-              channelArr[0], 
-              channelArr[1], 
-              channelArr[2],
-              channelArr[3],
-              channelArr[4],
-              channelArr[5],
-              channelArr[6],
-              channelArr[7]);
-              
-    Serial.print(outputarr);
+//    sprintf(outputarr, "%d|%d|%d|%d|%d|%d|%d|%d\r\n",
+//              channelArr[0], 
+//              channelArr[1], 
+//              channelArr[2],
+//              channelArr[3],
+//              channelArr[4],
+//              channelArr[5],
+//              channelArr[6],
+//              channelArr[7]);
+//              
+//    Serial.print(outputarr);
+    Serial.println(channelArr[0]);
   }
   else {
   }
