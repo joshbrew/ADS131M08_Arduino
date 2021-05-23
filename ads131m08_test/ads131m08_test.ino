@@ -49,7 +49,7 @@ void setup() {
   //adc.writeReg(ADS131_CH0_CFG,0b0000000000000000);
 
   //Gain settings, 1-128 (increasing by factor of 2)
-  //adc.setGain(64);
+  adc.setGain(32);
 
    
   uint16_t clkreg = adc.readReg(ADS131_CLOCK);
