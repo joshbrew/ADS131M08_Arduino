@@ -39,16 +39,24 @@ void setup() {
    * Bytes 4-2: Modulator Oversampling 000 = 128 OSR (32ksps), 111 = 16256 OSR (250sps)
    * Bytes 1-0: Power mode selections 11 or 10 = high resolution, 01 = low power, 00 = very low power
    */
-  
+
   //adc.writeReg(ADS131_CFG,0b0000000000000000);
-  //adc.writeReg(ADS131_CH0_CFG,0b0000000000000001);
-  
-  
+
+  //DC Block Filter settings:
+  //adc.writeReg(ADS131_THRSHLD_LSB,0b0000000000001010);
+
+  //Channel settings
+  //adc.writeReg(ADS131_CH0_CFG,0b0000000000000000);
+
+  //Gain settings, 1-128 (increasing by factor of 2)
+  //adc.setGain(64);
+
+   
   uint16_t clkreg = adc.readReg(ADS131_CLOCK);
   Serial.print("CLOCK: ");
   Serial.println(clkreg,BIN);
   
-  //adc.setGain(64);
+
   
   uint16_t gainreg = adc.readReg(ADS131_GAIN1);
   Serial.print("GAIN1: ");
