@@ -30,7 +30,20 @@ void setup() {
 
   delay(100);
 
-  adc.writeReg(ADS131_CLOCK,0b1111111100011010); //
+  adc.writeReg(ADS131_CLOCK,0b1111111100011111); //Clock register (page)
+  /*CLOCK REG SETTINGS
+   * Bytes 15-8: ADC Channel enable/disable
+   * Byte 7: Crystal disable 
+   * Byte 6: External Reference Enable
+   * Byte 5: Reserved
+   * Bytes 4-2: Modulator Oversampling 000 = 128 OSR (32ksps), 111 = 16256 OSR (250sps)
+   * Bytes 1-0: Power mode selections 11 or 10 = high resolution, 01 = low power, 00 = very low power
+   */
+  
+  //adc.writeReg(ADS131_CFG,0b0000000000000000);
+  //adc.writeReg(ADS131_CH0_CFG,0b0000000000000001);
+  
+  
   uint16_t clkreg = adc.readReg(ADS131_CLOCK);
   Serial.print("CLOCK: ");
   Serial.println(clkreg,BIN);
@@ -45,15 +58,15 @@ void setup() {
   
   uint16_t id = adc.readReg(ADS131_ID);
   Serial.print("ID: ");
-  Serial.println(id, HEX);
+  Serial.println(id, BIN);
   
   uint16_t stat = adc.readReg(ADS131_STATUS);
   Serial.print("Status: ");
-  Serial.println(stat, HEX);
+  Serial.println(stat, BIN);
 
   uint16_t Mode = adc.readReg(ADS131_MODE);
   Serial.print("Mode: ");
-  Serial.println(Mode, HEX);
+  Serial.println(Mode, BIN);
 
   Serial.println("Starting in 3...");
   delay(1000);
@@ -86,9 +99,7 @@ void loop() {
               channelArr[5],
               channelArr[6],
               channelArr[7]);
-    
-  
-    Serial.print("Channel Readings: ");
+              
     Serial.print(outputarr);
   }
   else {
