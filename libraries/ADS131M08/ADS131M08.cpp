@@ -38,6 +38,21 @@ void ADS131M08::readChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32
         outputArrPtr++;
         channelArrPtr++;
     }
+    
+}
+
+void ADS131M08::readAllChannels(int32_t inputArr[8]) {
+    uint32_t rawDataArr[10];
+    int8_t channelArrPtr = 0;
+    int8_t channelArrLen = 8;
+
+    // Get data
+    spiCommFrame(&rawDataArr[0]);
+    // Save the decoded data for each of the channels
+    for (int8_t i = 0; i<8; i++) {
+        inputArr[i] = twoCompDeco(rawDataArr[channelArrPtr+1]);
+        channelArrPtr++;
+    }
 }
 
 int32_t ADS131M08::readChannelSingle(int8_t channel) {
@@ -186,7 +201,7 @@ bool ADS131M08::setGain(int gain) { // apply gain to all channels (1 to 128, bas
     uint16_t writegain = 0;
     if(gain == 1 ) {
         writegain = 0b0000000000000000;
-    }
+    }  
     else if (gain == 2) {
         writegain = 0b0001000100010001;
     }

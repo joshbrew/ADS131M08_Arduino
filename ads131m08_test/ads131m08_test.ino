@@ -35,7 +35,8 @@ void setup() {
   Serial.print("CLOCK: ");
   Serial.println(clkreg,BIN);
   
-  adc.setGain(64);
+  //adc.setGain(64);
+  
   uint16_t gainreg = adc.readReg(ADS131_GAIN1);
   Serial.print("GAIN1: ");
   Serial.println(gainreg, BIN);
@@ -68,10 +69,27 @@ void setup() {
 
 }
 
+char outputarr[64];
+
 void loop() {
  if(digitalRead(DRDY_PIN)) {
-    Serial.print("Channel 0 Reading: ");
-    Serial.println(adc.readChannelSingle(0)); //Just read the first one
+
+    //Serial.println(adc.readChannelSingle(0)); //Just read the first one
+    int32_t channelArr[8];
+    adc.readAllChannels(channelArr);
+    sprintf(outputarr, "%d|%d|%d|%d|%d|%d|%d|%d\r\n",
+              channelArr[0], 
+              channelArr[1], 
+              channelArr[2],
+              channelArr[3],
+              channelArr[4],
+              channelArr[5],
+              channelArr[6],
+              channelArr[7]);
+    
+  
+    Serial.print("Channel Readings: ");
+    Serial.print(outputarr);
   }
   else {
   }

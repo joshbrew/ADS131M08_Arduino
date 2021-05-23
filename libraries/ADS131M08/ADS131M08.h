@@ -85,6 +85,7 @@ class ADS131M08 {
     ADS131M08(int cs=5, int xtal=22, int drdy=21, int clk = 2000000);
     void init(int clkin = 8192000);
     void readChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_t * outputArrPtr);
+    void readAllChannels(int32_t inputArr[8]);
     int32_t readChannelSingle(int8_t channel);
     bool globalChop(bool enabled, uint8_t log2delay);
     bool writeReg(uint8_t reg, uint16_t data);
