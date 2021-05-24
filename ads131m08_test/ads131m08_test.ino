@@ -1,4 +1,5 @@
 #include "ADS131M08.h"
+#include "esp_timer.h"
 
 //Joshua Brewster, Jacob Tinkhauser
 
@@ -20,9 +21,13 @@ int CLKOUT  =                 8192000; //XTAL speed (50% duty cycle PWM)
 
 ADS131M08 adc(CS_PIN,XTAL_PIN,DRDY_PIN,8192000);
 
+unsigned long long sampleNum = 0;
+unsigned long long currentMicros = 0;
+char outputarr[128];
+
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(1000000);
   Serial.println("Setting SPI");
   adc.spi = new SPIClass(VSPI);
   Serial.println("Booting SPI");
@@ -36,7 +41,7 @@ void setup() {
   delay(1);
   digitalWrite(RESET, HIGH);
 
-  adc.writeReg(ADS131_CLOCK,0b1111111100011110); //Clock register (page 55 in datasheet)
+  adc.writeReg(ADS131_CLOCK,0b1111111100011010); //Clock register (page 55 in datasheet)
   /*CLOCK REG SETTINGS
    * Bytes 15-8: ADC Channel enable/disable
    * Byte 7: Crystal disable 
@@ -88,11 +93,12 @@ void setup() {
   delay(1000);
   Serial.println("1...");
   delay(1000);
-  
+
+
+  currentMicros = esp_timer_get_time();
 
 }
 
-char outputarr[64];
 
 void loop() {
  if(digitalRead(DRDY_PIN)) {
@@ -100,18 +106,25 @@ void loop() {
     //Serial.println(adc.readChannelSingle(0)); //Just read the first one
     int32_t channelArr[8];
     adc.readAllChannels(channelArr);
-//    sprintf(outputarr, "%d|%d|%d|%d|%d|%d|%d|%d\r\n",
-//              channelArr[0], 
-//              channelArr[1], 
-//              channelArr[2],
-//              channelArr[3],
-//              channelArr[4],
-//              channelArr[5],
-//              channelArr[6],
-//              channelArr[7]);
-//              
-//    Serial.print(outputarr);
-    Serial.println(channelArr[0]);
+    currentMicros = esp_timer_get_time();
+    sprintf(outputarr, "%d|%d|%d|%d|%d|%d|%d|%d|%lu\r\n", 
+              channelArr[0], 
+              channelArr[1], 
+              channelArr[2],
+              channelArr[3],
+              channelArr[4],
+              channelArr[5],
+              channelArr[6],
+              channelArr[7],
+              currentMicros
+              );
+              
+    Serial.print(outputarr);
+//    Serial.print(channelArr[0]);
+//    Serial.print("|");
+//    Serial.print(currentMicros);
+//    Serial.print("\r\n");
+    sampleNum++;
   }
   else {
   }
